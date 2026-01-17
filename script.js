@@ -47,7 +47,7 @@ function generateMessage(noCount) {
     "No",
     "Are you sure?",
     "Are you reaaally sure??",
-    "Pleaseeee",
+    "Pleaseeee??",
     "STOPPPP CLICKING NO",
     "I'm gonna sob if you dont stop",
     "Im already sobbing",
