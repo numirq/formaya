@@ -2,6 +2,7 @@
 
 const titleElement = document.querySelector(".title");
 const buttonsContainer = document.querySelector(".buttons");
+const headerElement = document.querySelector(".header");
 const yesButton = document.querySelector(".btn--yes");
 const noButton = document.querySelector(".btn--no");
 const catImg = document.querySelector(".cat-img");
@@ -29,6 +30,7 @@ noButton.addEventListener("click", function () {
 function handleYesClick() {
   titleElement.innerHTML = " i knew u would choose yes dude, i lov u <3 ";
   buttonsContainer.classList.add("hidden");
+  headerElement.classList.add("hidden");
   changeImage("yes");
 }
 
@@ -58,27 +60,27 @@ function generateMessage(noCount) {
 
 function changeImage(image) {
   const formats = [".gif", ".png"];
-  let loaded = false;
+  let currentFormatIndex = 0;
 
-  function tryLoadImage(format) {
-    const src = `cat${image}${format}`;
+  function tryLoadImage() {
+    if (currentFormatIndex >= formats.length) return;
+
+    const src = `cat${image}${formats[currentFormatIndex]}`;
     const testImg = new Image();
 
     testImg.onload = function () {
       catImg.src = src;
-      loaded = true;
     };
 
     testImg.onerror = function () {
-      if (!loaded && formats.indexOf(format) < formats.length - 1) {
-        tryLoadImage(formats[formats.indexOf(format) + 1]);
-      }
+      currentFormatIndex++;
+      tryLoadImage();
     };
 
     testImg.src = src;
   }
 
-  tryLoadImage(formats[0]);
+  tryLoadImage();
 }
 
 function updateNoButtonText() {
