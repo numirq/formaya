@@ -6,7 +6,7 @@ const yesButton = document.querySelector(".btn--yes");
 const noButton = document.querySelector(".btn--no");
 const catImg = document.querySelector(".cat-img");
 
-const MAX_IMAGES = 7;
+const MAX_IMAGES = 6;
 
 let play = true;
 let noCount = 0;
@@ -27,7 +27,7 @@ noButton.addEventListener("click", function () {
 });
 
 function handleYesClick() {
-  titleElement.innerHTML = "Yayyy!!!!!!💖";
+  titleElement.innerHTML = " i knew u would choose yes dude, i lov u <3 ";
   buttonsContainer.classList.add("hidden");
   changeImage("yes");
 }
@@ -57,8 +57,28 @@ function generateMessage(noCount) {
 }
 
 function changeImage(image) {
-  const extension = image === "yes" ? ".gif" : ".gif";
-  catImg.src = `cat${image}${extension}`;
+  const formats = [".gif", ".png"];
+  let loaded = false;
+
+  function tryLoadImage(format) {
+    const src = `cat${image}${format}`;
+    const testImg = new Image();
+
+    testImg.onload = function () {
+      catImg.src = src;
+      loaded = true;
+    };
+
+    testImg.onerror = function () {
+      if (!loaded && formats.indexOf(format) < formats.length - 1) {
+        tryLoadImage(formats[formats.indexOf(format) + 1]);
+      }
+    };
+
+    testImg.src = src;
+  }
+
+  tryLoadImage(formats[0]);
 }
 
 function updateNoButtonText() {
